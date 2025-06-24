@@ -20,11 +20,7 @@ from IPython.display import display
 from pyspark.sql import SparkSession
 import os # Import os for environment variables
 
-# Add the necessary Hadoop S3 dependencies for Spark to read from s3a://
-# This tells Spark to download and include the required JARs.
-# You might need to adjust the versions (3.2.0 and 1.11.375) based on your Spark environment.
-# If you encounter issues, check the documentation for your specific Spark version
-# or common dependency combinations.
+
 spark = SparkSession.builder \
     .appName("MechanismX_Assignment") \
     .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.2.0,com.amazonaws:aws-java-sdk-bundle:1.11.375") \
@@ -124,33 +120,6 @@ for i in range(num_chunks):
     time.sleep(1) # Add a small delay
 
 
-
-# # prompt: so i have one question if my chunks are present in s3 exsisting one should i delete that
-
-# # Before processing chunks, delete existing chunks if they exist
-# # Initialize
-# bucket_name = "assignment-sumi-bucket"
-# chunk_prefix = "chunks/"
-
-# s3 = boto3.resource("s3") # Use resource for easier object deletion
-# bucket = s3.Bucket(bucket_name)
-
-# print(f"Checking for existing chunks in s3://{bucket_name}/{chunk_prefix}")
-# objects_to_delete = [{'Key': obj.key} for obj in bucket.objects.filter(Prefix=chunk_prefix)]
-
-# if objects_to_delete:
-#     print(f"Found {len(objects_to_delete)} existing chunk objects. Deleting them...")
-#     # S3 delete_objects can delete up to 1000 objects at a time
-#     for i in range(0, len(objects_to_delete), 1000):
-#         batch = objects_to_delete[i:i+1000]
-#         bucket.delete_objects(Delete={'Objects': batch})
-#         print(f"Deleted batch {i//1000 + 1}")
-#     print("✅ Finished deleting existing chunks.")
-# else:
-#     print("🔎 No existing chunks found. Proceeding with new uploads.")
-
-# # Now proceed with the chunk creation and upload loop as in the preceding code
-# # ... (rest of your code for creating and uploading chunks)
 
 """PatId1 detection and uploads"""
 
@@ -428,13 +397,4 @@ for i, key in enumerate(chunk_keys):
 print("\n✅ Completed PatId3 (Female DeiNeeded) detection.")
 
 
-
-# Commented out IPython magic to ensure Python compatibility.
-# %cd /content
-!ls
-
-# Commented out IPython magic to ensure Python compatibility.
-# %cd /content/pyspark-streaming-assignment
-
-!git status
 
