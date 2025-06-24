@@ -42,8 +42,7 @@ uploaded = files.upload()
 !ls
 # %%
 
-# %%
-# prompt: how to know my files are in which directory help me the Spark DataFrames are read from the original `/content/` path:
+
 
 # Read input files
 df_txn = spark.read.csv("/content/pyspark-streaming-assignment/transactions.csv", header=True, inferSchema=True)
